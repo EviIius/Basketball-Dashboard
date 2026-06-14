@@ -548,3 +548,6 @@
  GET /api/live-games 200 in 121ms
  GET /api/bracket?season=2025-26 200 in 14ms
  GET /api/bracket?season=2025-26 200 in 15ms
+ GET /api/live-games 200 in 136ms
+ GET /api/live-games 200 in 1133ms
+ GET /api/bracket?season=2025-26 200 in 384ms

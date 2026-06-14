@@ -2,7 +2,7 @@
 
 import { Fragment } from "react";
 import useSWR from "swr";
-import { TEAM_COLORS } from "@/lib/nbaTeams";
+import { NBA_TEAMS, TEAM_COLORS } from "@/lib/nbaTeams";
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
@@ -30,88 +30,87 @@ interface StandingsResponse {
   teams: StandingTeam[];
 }
 
+function tricodeForTeam(teamId: number) {
+  return NBA_TEAMS.find((team) => team.id === teamId)?.tricode ?? "";
+}
+
+function formatPct(value: number) {
+  return value.toFixed(3).replace(/^0/, "");
+}
+
 function ConferenceTable({ teams, conference }: { teams: StandingTeam[]; conference: "East" | "West" }) {
   const sorted = teams
-    .filter((t) => t.conference === conference)
+    .filter((team) => team.conference === conference)
     .sort((a, b) => a.playoffRank - b.playoffRank);
 
   return (
-    <div className="bg-court-card border border-court-border rounded-xl overflow-hidden">
-      <div className="px-4 py-3 border-b border-court-border flex items-center justify-between">
-        <h3 className="text-white font-bold text-sm">
-          {conference}ern Conference
-        </h3>
-        <span className="text-court-muted text-xs">Updated every 5 min</span>
+    <div className="overflow-hidden rounded-lg border border-court-border bg-court-card">
+      <div className="flex items-center justify-between border-b border-court-border px-4 py-3">
+        <h3 className="text-sm font-black text-white">{conference}ern Conference</h3>
+        <span className="text-xs text-court-muted">{sorted.length} teams</span>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead className="bg-court-surface">
             <tr>
-              <th className="px-2 py-2 text-left text-court-muted font-semibold uppercase tracking-wider w-8">#</th>
-              <th className="px-2 py-2 text-left text-court-muted font-semibold uppercase tracking-wider">Team</th>
-              <th className="px-2 py-2 text-right text-court-muted font-mono">W</th>
-              <th className="px-2 py-2 text-right text-court-muted font-mono">L</th>
-              <th className="px-2 py-2 text-right text-court-muted font-mono">PCT</th>
-              <th className="px-2 py-2 text-right text-court-muted font-mono hidden sm:table-cell">GB</th>
-              <th className="px-2 py-2 text-right text-court-muted font-mono hidden md:table-cell">HOME</th>
-              <th className="px-2 py-2 text-right text-court-muted font-mono hidden md:table-cell">ROAD</th>
-              <th className="px-2 py-2 text-right text-court-muted font-mono hidden lg:table-cell">L10</th>
-              <th className="px-2 py-2 text-right text-court-muted font-mono">STRK</th>
+              <th className="w-8 px-2 py-2 text-left font-semibold uppercase tracking-wider text-court-muted">#</th>
+              <th className="px-2 py-2 text-left font-semibold uppercase tracking-wider text-court-muted">Team</th>
+              <th className="px-2 py-2 text-right font-mono text-court-muted">W</th>
+              <th className="px-2 py-2 text-right font-mono text-court-muted">L</th>
+              <th className="px-2 py-2 text-right font-mono text-court-muted">PCT</th>
+              <th className="hidden px-2 py-2 text-right font-mono text-court-muted sm:table-cell">GB</th>
+              <th className="hidden px-2 py-2 text-right font-mono text-court-muted md:table-cell">HOME</th>
+              <th className="hidden px-2 py-2 text-right font-mono text-court-muted md:table-cell">ROAD</th>
+              <th className="hidden px-2 py-2 text-right font-mono text-court-muted lg:table-cell">L10</th>
+              <th className="px-2 py-2 text-right font-mono text-court-muted">STRK</th>
             </tr>
           </thead>
           <tbody>
-            {sorted.map((t, i) => {
-              const inPlayoffs = t.playoffRank <= 6;
-              const inPlayIn = t.playoffRank >= 7 && t.playoffRank <= 10;
-              const showPlayInLine = i === 5 || i === 9;
-              const color = TEAM_COLORS[
-                Object.keys(TEAM_COLORS).find(
-                  (tc) => tc === t.teamCity.slice(0, 3).toUpperCase()
-                ) ?? ""
-              ]?.primary;
-              const streakWins = t.streak?.startsWith("W");
+            {sorted.map((team, index) => {
+              const inPlayoffs = team.playoffRank <= 6;
+              const inPlayIn = team.playoffRank >= 7 && team.playoffRank <= 10;
+              const showCutLine = index === 5 || index === 9;
+              const tricode = tricodeForTeam(team.teamId);
+              const color = TEAM_COLORS[tricode]?.primary ?? "#6b7280";
+              const streakWins = team.streak?.startsWith("W");
 
               return (
-                <Fragment key={t.teamId}>
+                <Fragment key={team.teamId}>
                   <tr
-                    className={`border-t border-court-border hover:bg-court-surface/40 transition-colors ${
+                    className={`border-t border-court-border transition-colors hover:bg-court-surface/60 ${
                       inPlayoffs ? "" : inPlayIn ? "opacity-90" : "opacity-60"
                     }`}
                   >
-                    <td className="px-2 py-2 font-mono text-white font-bold text-center">
-                      {t.playoffRank}
-                    </td>
+                    <td className="px-2 py-2 text-center font-mono font-bold text-white">{team.playoffRank}</td>
                     <td className="px-2 py-2">
                       <div className="flex items-center gap-2">
-                        <span className="w-1 h-6 rounded" style={{ backgroundColor: color ?? "#6b7280" }} />
-                        <span className="text-white font-semibold whitespace-nowrap">
-                          {t.teamCity} {t.teamName}
+                        <span className="h-6 w-1 rounded-sm" style={{ backgroundColor: color }} />
+                        <span className="whitespace-nowrap font-semibold text-white">
+                          {team.teamCity} {team.teamName}
                         </span>
-                        {t.clinchIndicator?.trim() && (
-                          <span className="text-court-accent text-[10px] font-bold">
-                            {t.clinchIndicator.trim()}
-                          </span>
+                        {team.clinchIndicator?.trim() && (
+                          <span className="text-[10px] font-bold text-court-amber">{team.clinchIndicator.trim()}</span>
                         )}
                       </div>
                     </td>
-                    <td className="px-2 py-2 text-right font-mono text-court-live font-semibold">{t.wins}</td>
-                    <td className="px-2 py-2 text-right font-mono text-red-400">{t.losses}</td>
-                    <td className="px-2 py-2 text-right font-mono text-white">{(t.winPct * 1000).toFixed(0).padStart(3, "0").replace(/^(\d)(\d\d)$/, ".$1$2")}</td>
-                    <td className="px-2 py-2 text-right font-mono text-court-muted hidden sm:table-cell">
-                      {t.gamesBack === 0 ? "—" : t.gamesBack.toFixed(1)}
+                    <td className="px-2 py-2 text-right font-mono font-semibold text-court-live">{team.wins}</td>
+                    <td className="px-2 py-2 text-right font-mono text-court-red">{team.losses}</td>
+                    <td className="px-2 py-2 text-right font-mono text-white">{formatPct(team.winPct)}</td>
+                    <td className="hidden px-2 py-2 text-right font-mono text-court-muted sm:table-cell">
+                      {team.gamesBack === 0 ? "-" : team.gamesBack.toFixed(1)}
                     </td>
-                    <td className="px-2 py-2 text-right font-mono text-court-muted hidden md:table-cell">{t.homeRecord}</td>
-                    <td className="px-2 py-2 text-right font-mono text-court-muted hidden md:table-cell">{t.roadRecord}</td>
-                    <td className="px-2 py-2 text-right font-mono text-court-muted hidden lg:table-cell">{t.last10}</td>
-                    <td className={`px-2 py-2 text-right font-mono font-semibold ${streakWins ? "text-court-live" : "text-red-400"}`}>
-                      {t.streak || "—"}
+                    <td className="hidden px-2 py-2 text-right font-mono text-court-muted md:table-cell">{team.homeRecord}</td>
+                    <td className="hidden px-2 py-2 text-right font-mono text-court-muted md:table-cell">{team.roadRecord}</td>
+                    <td className="hidden px-2 py-2 text-right font-mono text-court-muted lg:table-cell">{team.last10}</td>
+                    <td className={`px-2 py-2 text-right font-mono font-semibold ${streakWins ? "text-court-live" : "text-court-red"}`}>
+                      {team.streak || "-"}
                     </td>
                   </tr>
-                  {showPlayInLine && (
+                  {showCutLine && (
                     <tr>
-                      <td colSpan={10} className="px-3 py-1 border-t-2 border-dashed border-court-accent/40">
-                        <span className="text-court-accent text-[10px] uppercase tracking-wider font-semibold">
-                          {i === 5 ? "↑ Playoffs · Play-in ↓" : "↑ Play-in · Out ↓"}
+                      <td colSpan={10} className="border-t border-dashed border-court-amber/50 px-3 py-1">
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-court-amber">
+                          {index === 5 ? "Playoff line" : "Play-in line"}
                         </span>
                       </td>
                     </tr>
@@ -128,19 +127,14 @@ function ConferenceTable({ teams, conference }: { teams: StandingTeam[]; confere
 
 export default function StandingsPanel() {
   const { data, error, isLoading } = useSWR<StandingsResponse>("/api/standings", fetcher, {
-    refreshInterval: 300_000, // 5 min
+    refreshInterval: 300_000,
   });
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {[0, 1].map((i) => (
-          <div key={i} className="bg-court-card border border-court-border rounded-xl p-6">
-            <div className="h-4 bg-court-border rounded w-1/3 mb-4 animate-pulse" />
-            {Array.from({ length: 15 }).map((_, j) => (
-              <div key={j} className="h-6 bg-court-border/40 rounded mb-1 animate-pulse" />
-            ))}
-          </div>
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        {[0, 1].map((index) => (
+          <div key={index} className="h-[32rem] animate-pulse rounded-lg border border-court-border bg-court-card" />
         ))}
       </div>
     );
@@ -148,18 +142,16 @@ export default function StandingsPanel() {
 
   if (error || !data?.teams) {
     return (
-      <div className="text-center py-12 text-court-muted">
-        Could not load standings — stats.nba.com may be unreachable
+      <div className="rounded-lg border border-court-border bg-court-card p-10 text-center text-court-muted">
+        Could not load standings.
       </div>
     );
   }
 
   return (
     <div className="space-y-4">
-      <div className="text-court-muted text-sm">
-        Season {data.season} · Updated live
-      </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="text-sm text-court-muted">Season {data.season}</div>
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
         <ConferenceTable teams={data.teams} conference="East" />
         <ConferenceTable teams={data.teams} conference="West" />
       </div>

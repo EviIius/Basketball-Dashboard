@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import type { NBAGame } from "@/lib/types";
 import { TEAM_COLORS } from "@/lib/nbaTeams";
 import BoxScorePanel from "./BoxScorePanel";
@@ -13,10 +14,10 @@ function formatClock(clock: string): string {
 }
 
 function PeriodLabel({ period, status }: { period: number; status: 1 | 2 | 3 }) {
-  if (status === 1) return <span className="text-court-muted text-xs">Upcoming</span>;
-  if (status === 3) return <span className="text-court-muted text-xs font-semibold">FINAL</span>;
-  if (period <= 4) return <span className="text-court-live text-xs font-bold">Q{period}</span>;
-  return <span className="text-court-live text-xs font-bold">OT{period - 4}</span>;
+  if (status === 1) return <span className="text-xs text-court-muted">Upcoming</span>;
+  if (status === 3) return <span className="text-xs font-semibold text-court-muted">Final</span>;
+  if (period <= 4) return <span className="text-xs font-bold text-court-live">Q{period}</span>;
+  return <span className="text-xs font-bold text-court-live">OT{period - 4}</span>;
 }
 
 interface TeamBlockProps {
@@ -48,52 +49,42 @@ function TeamBlock({
 }: TeamBlockProps) {
   const colors = TEAM_COLORS[tricode] ?? { primary: "#6b7280", secondary: "#ffffff" };
   return (
-    <div className="flex items-center gap-3 flex-1">
+    <div className="flex min-w-0 flex-1 items-center gap-3">
       <div
-        className="w-11 h-11 rounded-lg flex items-center justify-center text-white text-xs font-black flex-shrink-0 relative"
+        className="relative flex h-11 w-12 shrink-0 items-center justify-center rounded-md text-xs font-black text-white"
         style={{ backgroundColor: colors.primary }}
       >
         {tricode}
         {seed != null && seed > 0 && (
-          <span className="absolute -top-1 -right-1 bg-court-accent text-court-bg text-[10px] font-black rounded-full w-4 h-4 flex items-center justify-center">
+          <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-court-amber text-[10px] font-black text-court-bg">
             {seed}
           </span>
         )}
       </div>
       <div className="min-w-0 flex-1">
-        <div className="text-white text-sm font-semibold leading-tight truncate">
+        <div className="truncate text-sm font-semibold leading-tight text-white">
           {city} {name}
         </div>
-        <div className="flex items-center gap-2 text-xs">
-          <span className="text-court-muted">
-            {wins}–{losses}
-          </span>
+        <div className="flex items-center gap-2 text-xs text-court-muted">
+          <span>{wins}-{losses}</span>
           {gameStatus === 2 && (
             <>
-              <span className="text-court-border">·</span>
-              <span className="flex items-center gap-0.5" title={`${timeoutsRemaining} TOs remaining`}>
-                {Array.from({ length: 3 }).map((_, i) => (
+              <span className="text-court-border">/</span>
+              <span className="flex items-center gap-0.5" title={`${timeoutsRemaining} timeouts remaining`}>
+                {Array.from({ length: 3 }).map((_, index) => (
                   <span
-                    key={i}
-                    className={`w-1 h-2 rounded-sm ${
-                      i < timeoutsRemaining ? "bg-court-muted" : "bg-court-border"
-                    }`}
+                    key={index}
+                    className={`h-2 w-1 rounded-sm ${index < timeoutsRemaining ? "bg-court-muted" : "bg-court-border"}`}
                   />
                 ))}
               </span>
-              {inBonus === "1" && (
-                <span className="text-court-accent text-[10px] font-bold uppercase">Bonus</span>
-              )}
+              {inBonus === "1" && <span className="text-[10px] font-bold uppercase text-court-amber">Bonus</span>}
             </>
           )}
         </div>
       </div>
       {gameStatus !== 1 && (
-        <div
-          className={`text-2xl font-black tabular-nums ${
-            isLeading ? "text-white" : "text-court-muted"
-          }`}
-        >
+        <div className={`font-mono text-2xl font-black tabular-nums ${isLeading ? "text-white" : "text-court-muted"}`}>
           {score}
         </div>
       )}
@@ -117,53 +108,40 @@ export default function GameCard({ game }: { game: NBAGame }) {
 
   return (
     <div
-      className={`bg-court-card border rounded-xl transition-all ${
-        expandable
-          ? "border-court-border hover:border-court-accent/40 cursor-pointer"
-          : "border-court-border"
-      } ${expanded ? "border-court-accent/60" : ""}`}
+      className={`rounded-lg border bg-court-card transition-colors ${
+        expandable ? "border-court-border hover:border-court-accent/60" : "border-court-border"
+      } ${expanded ? "border-court-accent/70" : ""}`}
     >
       <div
-        className="p-4"
-        onClick={() => expandable && setExpanded((v) => !v)}
+        className={expandable ? "cursor-pointer p-4" : "p-4"}
+        onClick={() => expandable && setExpanded((value) => !value)}
         role={expandable ? "button" : undefined}
       >
-        {/* Header: playoff label or live indicator */}
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2 min-w-0">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <div className="flex min-w-0 items-center gap-2">
             {isLive && (
-              <span className="flex items-center gap-1 flex-shrink-0">
-                <span className="w-2 h-2 rounded-full bg-court-live animate-pulse" />
-                <span className="text-court-live text-xs font-bold">LIVE</span>
+              <span className="flex shrink-0 items-center gap-1">
+                <span className="h-2 w-2 rounded-full bg-court-live" />
+                <span className="text-xs font-bold text-court-live">LIVE</span>
               </span>
             )}
             {game.gameLabel && (
-              <span className="text-court-accent text-xs font-bold uppercase tracking-wider truncate">
+              <span className="truncate text-xs font-bold uppercase tracking-wider text-court-accent">
                 {game.gameLabel}
               </span>
             )}
-            {game.gameSubLabel && (
-              <span className="text-court-muted text-xs truncate">· {game.gameSubLabel}</span>
-            )}
-            {!game.gameLabel && game.seriesText && (
-              <span className="text-court-muted text-xs truncate">{game.seriesText}</span>
-            )}
+            {game.gameSubLabel && <span className="truncate text-xs text-court-muted">/ {game.gameSubLabel}</span>}
+            {!game.gameLabel && game.seriesText && <span className="truncate text-xs text-court-muted">{game.seriesText}</span>}
           </div>
-          <div className="flex items-center gap-2 text-xs flex-shrink-0">
+          <div className="flex shrink-0 items-center gap-2 text-xs">
             <PeriodLabel period={game.period} status={game.gameStatus} />
-            {isLive && game.gameClock && (
-              <span className="text-court-live font-mono">{formatClock(game.gameClock)}</span>
-            )}
+            {isLive && game.gameClock && <span className="font-mono text-court-live">{formatClock(game.gameClock)}</span>}
             {game.gameStatus === 1 && <span className="text-court-muted">{gameTime}</span>}
           </div>
         </div>
 
-        {/* Series subline when playoff label is shown */}
-        {game.gameLabel && game.seriesText && (
-          <div className="text-court-muted text-xs mb-3 -mt-1">{game.seriesText}</div>
-        )}
+        {game.gameLabel && game.seriesText && <div className="-mt-1 mb-3 text-xs text-court-muted">{game.seriesText}</div>}
 
-        {/* Teams */}
         <div className="space-y-2">
           <TeamBlock
             city={game.awayTeam.teamCity}
@@ -194,61 +172,51 @@ export default function GameCard({ game }: { game: NBAGame }) {
           />
         </div>
 
-        {/* Period scores */}
         {game.gameStatus !== 1 && game.homeTeam.periods?.length > 0 && (
-          <div className="mt-3 pt-3 border-t border-court-border">
-            <div className="flex gap-1 text-xs font-mono">
-              <div className="text-court-muted w-8 flex-shrink-0" />
-              {game.homeTeam.periods.map((p) => (
-                <div key={p.period} className="text-court-muted w-7 text-center flex-shrink-0">
-                  {p.period <= 4 ? `Q${p.period}` : `OT${p.period - 4}`}
+          <div className="mt-3 border-t border-court-border pt-3">
+            <div className="flex gap-1 font-mono text-xs">
+              <div className="w-8 shrink-0 text-court-muted" />
+              {game.homeTeam.periods.map((period) => (
+                <div key={period.period} className="w-7 shrink-0 text-center text-court-muted">
+                  {period.period <= 4 ? `Q${period.period}` : `OT${period.period - 4}`}
                 </div>
               ))}
-              <div className="text-court-muted w-8 text-center flex-shrink-0 ml-auto">T</div>
+              <div className="ml-auto w-8 shrink-0 text-center text-court-muted">T</div>
             </div>
-            <div className="flex gap-1 text-xs font-mono mt-0.5">
-              <div className="text-court-muted w-8 flex-shrink-0 font-bold">{game.awayTeam.teamTricode}</div>
-              {game.awayTeam.periods.map((p) => (
-                <div key={p.period} className="text-white w-7 text-center flex-shrink-0">{p.score}</div>
-              ))}
-              <div className="text-white w-8 text-center flex-shrink-0 font-bold ml-auto">{game.awayTeam.score}</div>
-            </div>
-            <div className="flex gap-1 text-xs font-mono mt-0.5">
-              <div className="text-court-muted w-8 flex-shrink-0 font-bold">{game.homeTeam.teamTricode}</div>
-              {game.homeTeam.periods.map((p) => (
-                <div key={p.period} className="text-white w-7 text-center flex-shrink-0">{p.score}</div>
-              ))}
-              <div className="text-white w-8 text-center flex-shrink-0 font-bold ml-auto">{game.homeTeam.score}</div>
-            </div>
+            {[game.awayTeam, game.homeTeam].map((team) => (
+              <div key={team.teamId} className="mt-0.5 flex gap-1 font-mono text-xs">
+                <div className="w-8 shrink-0 font-bold text-court-muted">{team.teamTricode}</div>
+                {team.periods.map((period) => (
+                  <div key={period.period} className="w-7 shrink-0 text-center text-white">
+                    {period.score}
+                  </div>
+                ))}
+                <div className="ml-auto w-8 shrink-0 text-center font-bold text-white">{team.score}</div>
+              </div>
+            ))}
           </div>
         )}
 
-        {/* Game leaders (compact, when collapsed) */}
         {game.gameStatus !== 1 && game.gameLeaders?.homeLeaders?.name && !expanded && (
-          <div className="mt-3 pt-3 border-t border-court-border grid grid-cols-2 gap-3">
+          <div className="mt-3 grid grid-cols-2 gap-3 border-t border-court-border pt-3">
             {[
               { side: "away", leader: game.gameLeaders.awayLeaders, tricode: game.awayTeam.teamTricode },
               { side: "home", leader: game.gameLeaders.homeLeaders, tricode: game.homeTeam.teamTricode },
             ].map(({ side, leader, tricode }) => (
               <div key={side} className={side === "home" ? "text-right" : ""}>
-                <div className="text-court-muted text-[10px] uppercase tracking-wider mb-0.5">
-                  {tricode} Leader
-                </div>
-                <div className="text-white text-xs font-semibold truncate">{leader.name}</div>
-                <div className="text-court-muted text-[11px]">
-                  <span className="text-white font-semibold">{leader.points}</span>
-                  <span className="mx-0.5">·</span>
-                  {leader.rebounds}r
-                  <span className="mx-0.5">·</span>
-                  {leader.assists}a
+                <div className="mb-0.5 text-[10px] uppercase tracking-wider text-court-muted">{tricode} Leader</div>
+                <div className="truncate text-xs font-semibold text-white">{leader.name}</div>
+                <div className="text-[11px] text-court-muted">
+                  <span className="font-semibold text-white">{leader.points}</span> pts / {leader.rebounds} reb / {leader.assists} ast
                 </div>
               </div>
             ))}
           </div>
         )}
 
-        {/* Prediction widget */}
         <PredictionWidget
+          gameId={game.gameId}
+          gameDateUTC={game.gameTimeUTC}
           homeId={game.homeTeam.teamId}
           awayId={game.awayTeam.teamId}
           homeTricode={game.homeTeam.teamTricode}
@@ -258,18 +226,16 @@ export default function GameCard({ game }: { game: NBAGame }) {
           gameStatus={game.gameStatus}
         />
 
-        {/* Expand hint */}
         {expandable && (
-          <div className="mt-3 pt-2 border-t border-court-border flex items-center justify-center gap-1 text-court-muted text-[11px] hover:text-court-accent transition-colors">
+          <div className="mt-3 flex items-center justify-center gap-1 border-t border-court-border pt-3 text-[11px] text-court-muted transition-colors hover:text-court-accent">
             <span>{expanded ? "Hide box score" : "Box score"}</span>
-            <span>{expanded ? "▲" : "▼"}</span>
+            {expanded ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
           </div>
         )}
       </div>
 
-      {/* Expanded box score */}
       {expanded && expandable && (
-        <div className="border-t border-court-border bg-court-surface/40 rounded-b-xl">
+        <div className="rounded-b-lg border-t border-court-border bg-court-surface/45">
           <BoxScorePanel gameId={game.gameId} liveRefresh={isLive} />
         </div>
       )}

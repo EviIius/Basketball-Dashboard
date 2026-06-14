@@ -8,16 +8,16 @@ import { TEAM_COLORS } from "@/lib/nbaTeams";
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 function fmtMinutes(min: string): string {
-  // "PT34M" or "PT33M54.00S" → "34" or "33:54"
+  // "PT34M" or "PT33M54.00S" to "34" or "33:54"
   const m = min.match(/PT(\d+)M(?:([\d.]+)S)?/);
-  if (!m) return "—";
+  if (!m) return "-";
   const mm = m[1];
   const ss = m[2] ? Math.floor(parseFloat(m[2])).toString().padStart(2, "0") : null;
   return ss ? `${mm}:${ss}` : mm;
 }
 
 function pct(value: number): string {
-  if (!Number.isFinite(value)) return "—";
+  if (!Number.isFinite(value)) return "-";
   return `${(value * 100).toFixed(1)}%`;
 }
 
@@ -45,7 +45,7 @@ function PlayerTable({ team }: { team: BoxTeam }) {
       }`}
     >
       {label}
-      {sortKey === k && <span className="ml-0.5">▼</span>}
+      {sortKey === k && <span className="ml-0.5">v</span>}
     </th>
   );
 

@@ -1,10 +1,47 @@
 "use client";
 
 import useSWR from "swr";
+import type { ReactNode } from "react";
+import { Activity, CalendarX } from "lucide-react";
 import GameCard from "./GameCard";
 import type { NBAScoreboard } from "@/lib/types";
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
+
+function GameGridSkeleton() {
+  return (
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+      {Array.from({ length: 6 }).map((_, index) => (
+        <div key={index} className="h-64 animate-pulse rounded-lg border border-court-border bg-court-card" />
+      ))}
+    </div>
+  );
+}
+
+function Section({
+  title,
+  count,
+  tone,
+  children,
+}: {
+  title: string;
+  count: number;
+  tone?: "live";
+  children: ReactNode;
+}) {
+  return (
+    <section>
+      <div className="mb-3 flex items-center gap-2">
+        {tone === "live" && <span className="h-2 w-2 rounded-full bg-court-live" />}
+        <h3 className={`text-sm font-black uppercase tracking-wider ${tone === "live" ? "text-court-live" : "text-court-muted"}`}>
+          {title}
+        </h3>
+        <span className="text-xs text-court-muted">{count}</span>
+      </div>
+      {children}
+    </section>
+  );
+}
 
 export default function LiveGamesPanel() {
   const { data, error, isLoading } = useSWR<NBAScoreboard>("/api/live-games", fetcher, {
@@ -12,61 +49,36 @@ export default function LiveGamesPanel() {
     revalidateOnFocus: true,
   });
 
-  if (isLoading) {
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="bg-court-card border border-court-border rounded-xl p-4 animate-pulse">
-            <div className="h-4 bg-court-border rounded w-1/3 mb-3" />
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-court-border rounded-lg" />
-                <div className="flex-1 space-y-1">
-                  <div className="h-3 bg-court-border rounded w-3/4" />
-                  <div className="h-2 bg-court-border rounded w-1/4" />
-                </div>
-                <div className="w-8 h-6 bg-court-border rounded" />
-              </div>
-              <div className="h-px bg-court-border" />
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-court-border rounded-lg" />
-                <div className="flex-1 space-y-1">
-                  <div className="h-3 bg-court-border rounded w-3/4" />
-                  <div className="h-2 bg-court-border rounded w-1/4" />
-                </div>
-                <div className="w-8 h-6 bg-court-border rounded" />
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  }
+  if (isLoading) return <GameGridSkeleton />;
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center">
-        <div className="text-4xl mb-3">🏀</div>
-        <div className="text-white font-semibold mb-1">Could not load live games</div>
-        <div className="text-court-muted text-sm">Check your connection and try again</div>
+      <div className="flex flex-col items-center justify-center rounded-lg border border-court-border bg-court-card py-16 text-center">
+        <Activity className="mb-3 h-8 w-8 text-court-muted" />
+        <div className="font-semibold text-white">Could not load live games</div>
+        <div className="mt-1 text-sm text-court-muted">The NBA live feed did not respond.</div>
       </div>
     );
   }
 
   const games = data?.games ?? [];
-  const liveGames = games.filter((g) => g.gameStatus === 2);
-  const upcomingGames = games.filter((g) => g.gameStatus === 1);
-  const finishedGames = games.filter((g) => g.gameStatus === 3);
+  const liveGames = games.filter((game) => game.gameStatus === 2);
+  const upcomingGames = games.filter((game) => game.gameStatus === 1);
+  const finishedGames = games.filter((game) => game.gameStatus === 3);
 
   if (games.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center">
-        <div className="text-5xl mb-4">🏀</div>
-        <div className="text-white text-lg font-semibold mb-2">No games today</div>
-        <div className="text-court-muted text-sm">
+      <div className="flex flex-col items-center justify-center rounded-lg border border-court-border bg-court-card py-16 text-center">
+        <CalendarX className="mb-3 h-9 w-9 text-court-muted" />
+        <div className="text-lg font-semibold text-white">No games today</div>
+        <div className="mt-1 text-sm text-court-muted">
           {data?.gameDate
-            ? `No NBA games scheduled for ${new Date(data.gameDate + "T12:00:00").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}`
-            : "Check back on a game day"}
+            ? new Date(`${data.gameDate}T12:00:00`).toLocaleDateString("en-US", {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+              })
+            : "Check the season games tab for the full schedule."}
         </div>
       </div>
     );
@@ -74,53 +86,38 @@ export default function LiveGamesPanel() {
 
   return (
     <div className="space-y-6">
-      {/* Live now */}
       {liveGames.length > 0 && (
-        <section>
-          <div className="flex items-center gap-2 mb-3">
-            <span className="w-2 h-2 rounded-full bg-court-live animate-pulse" />
-            <h2 className="text-court-live text-sm font-bold uppercase tracking-wider">Live Now</h2>
-            <span className="text-court-muted text-xs">({liveGames.length})</span>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {liveGames.map((g) => (
-              <GameCard key={g.gameId} game={g} />
+        <Section title="Live Now" count={liveGames.length} tone="live">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {liveGames.map((game) => (
+              <GameCard key={game.gameId} game={game} />
             ))}
           </div>
-        </section>
+        </Section>
       )}
 
-      {/* Upcoming */}
       {upcomingGames.length > 0 && (
-        <section>
-          <h2 className="text-court-muted text-sm font-bold uppercase tracking-wider mb-3">
-            Upcoming · {upcomingGames.length} game{upcomingGames.length !== 1 ? "s" : ""}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {upcomingGames.map((g) => (
-              <GameCard key={g.gameId} game={g} />
+        <Section title="Upcoming" count={upcomingGames.length}>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {upcomingGames.map((game) => (
+              <GameCard key={game.gameId} game={game} />
             ))}
           </div>
-        </section>
+        </Section>
       )}
 
-      {/* Final */}
       {finishedGames.length > 0 && (
-        <section>
-          <h2 className="text-court-muted text-sm font-bold uppercase tracking-wider mb-3">
-            Final · {finishedGames.length} game{finishedGames.length !== 1 ? "s" : ""}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {finishedGames.map((g) => (
-              <GameCard key={g.gameId} game={g} />
+        <Section title="Final" count={finishedGames.length}>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {finishedGames.map((game) => (
+              <GameCard key={game.gameId} game={game} />
             ))}
           </div>
-        </section>
+        </Section>
       )}
 
-      <p className="text-court-muted text-xs text-right">
-        Auto-refreshes every 30s · Last updated{" "}
-        {new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", second: "2-digit" })}
+      <p className="text-right text-xs text-court-muted">
+        Updated {new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", second: "2-digit" })}
       </p>
     </div>
   );

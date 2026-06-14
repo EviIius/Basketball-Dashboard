@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 const idx = (h: string[], n: string) => h.indexOf(n);
 
 function currentSeason(): string {
-  // NBA seasons run Oct → June; Oct-Dec is start year, Jan-Jun is end year
+  // NBA seasons run Oct to June; Oct-Dec is start year, Jan-Jun is end year.
   const now = new Date();
   const year = now.getFullYear();
   const month = now.getMonth();

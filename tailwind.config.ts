@@ -6,15 +6,21 @@ const config: Config = {
     extend: {
       colors: {
         court: {
-          bg: "#0a0a0f",
-          surface: "#12121a",
-          card: "#1a1a26",
-          border: "#2a2a3d",
-          accent: "#f97316",
-          "accent-dim": "#c2410c",
+          bg: "#10100f",
+          surface: "#181917",
+          card: "#20211f",
+          border: "#343731",
+          accent: "#2dd4bf",
+          "accent-dim": "#0f766e",
+          amber: "#f5b84b",
+          red: "#ef5b5b",
           live: "#22c55e",
-          muted: "#6b7280",
+          muted: "#9a9f92",
         },
+      },
+      borderRadius: {
+        xl: "0.5rem",
+        "2xl": "0.5rem",
       },
       fontFamily: {
         mono: ["var(--font-mono)", "monospace"],

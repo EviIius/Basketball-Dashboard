@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "NBA Dashboard",
-  description: "Live scores and historical team stats",
+  title: "Basketball Decision Desk",
+  description: "NBA predictions, live win calls, matchup simulation, and validated stats",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -60,6 +60,7 @@ const STATUS_FILTERS = [
 ] as const;
 
 const TYPE_FILTERS = [
+  { id: "all", label: "All games" },
   { id: "model", label: "Model games" },
   { id: "regular", label: "Regular" },
   { id: "play-in", label: "Play-in" },
@@ -173,7 +174,7 @@ function GameRow({ game }: { game: SeasonGame }) {
 
 export default function SeasonGamesPanel() {
   const [status, setStatus] = useState<(typeof STATUS_FILTERS)[number]["id"]>("all");
-  const [type, setType] = useState<(typeof TYPE_FILTERS)[number]["id"]>("model");
+  const [type, setType] = useState<(typeof TYPE_FILTERS)[number]["id"]>("all");
   const [teamId, setTeamId] = useState("0");
   const { data, error, isLoading } = useSWR<SeasonGamesResponse>("/api/season-games", fetcher, {
     refreshInterval: 900_000,
@@ -183,7 +184,11 @@ export default function SeasonGamesPanel() {
     const rows = data?.games ?? [];
     return rows
       .filter((game) => (status === "all" ? true : game.status === status))
-      .filter((game) => (type === "model" ? isModelEligible(game.gameType) : game.gameType === type))
+      .filter((game) => {
+        if (type === "all") return true;
+        if (type === "model") return isModelEligible(game.gameType);
+        return game.gameType === type;
+      })
       .filter((game) => {
         if (teamId === "0") return true;
         const id = Number(teamId);
@@ -227,11 +232,11 @@ export default function SeasonGamesPanel() {
           <div className="mt-1 text-2xl font-black text-court-accent">{data.counts.modelEligible}</div>
         </div>
         <div className="rounded-lg border border-court-border bg-court-card p-4">
-          <div className="text-xs font-semibold uppercase tracking-wider text-court-muted">In State</div>
+          <div className="text-xs font-semibold uppercase tracking-wider text-court-muted">Final Scores</div>
           <div className="mt-1 text-2xl font-black text-court-live">{data.counts.completedModelGames}</div>
         </div>
         <div className="rounded-lg border border-court-border bg-court-card p-4">
-          <div className="text-xs font-semibold uppercase tracking-wider text-court-muted">Remaining</div>
+          <div className="text-xs font-semibold uppercase tracking-wider text-court-muted">Upcoming</div>
           <div className="mt-1 text-2xl font-black text-court-amber">{data.counts.upcomingModelGames}</div>
         </div>
       </div>

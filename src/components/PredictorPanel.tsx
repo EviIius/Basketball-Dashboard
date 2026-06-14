@@ -2,9 +2,10 @@
 
 import { useMemo, useState } from "react";
 import useSWR from "swr";
-import { ArrowLeftRight, CalendarClock, ChevronsUpDown, Gauge, RefreshCcw, Target, TestTube2 } from "lucide-react";
+import { ArrowLeftRight, CalendarClock, ChevronsUpDown, Gauge, RefreshCcw, Target } from "lucide-react";
 import { NBA_TEAMS, TEAM_COLORS } from "@/lib/nbaTeams";
 import TeamSelector from "./TeamSelector";
+import ModelHealthPanel from "./ModelHealthPanel";
 import type { NBAStaticTeam } from "@/lib/types";
 import type { Prediction, PredictionDriver, TeamSnapshot } from "@/lib/predict";
 
@@ -18,23 +19,6 @@ interface PredictResponse {
   prediction: Prediction;
   home: TeamSnapshot;
   away: TeamSnapshot;
-  error?: string;
-}
-
-interface BacktestResponse {
-  season: string;
-  type: string;
-  total: number;
-  correct: number;
-  accuracy: number;
-  brierScore: number;
-  logLoss: number;
-  homeBaselineAccuracy: number;
-  warmupGames: number;
-  byMonth: { month: string; total: number; correct: number; accuracy: number; brier: number }[];
-  byConfidence: { confidence: Prediction["confidence"]; total: number; correct: number; accuracy: number; brier: number }[];
-  calibration: { bucket: string; total: number; expectedHomeWins: number; actualHomeWins: number }[];
-  sampleGames: { gameId: string; date: string; away: string; home: string; predHomeWin: number; actualHome: number; actualAway: number; correct: boolean; confidence: string; margin: number }[];
   error?: string;
 }
 
@@ -189,7 +173,6 @@ export default function PredictorPanel() {
   const [neutralSite, setNeutralSite] = useState(false);
   const [modelScope, setModelScope] = useState<"current" | "lifetime">("current");
   const [pickingFor, setPickingFor] = useState<"home" | "away" | null>(null);
-  const [showBacktest, setShowBacktest] = useState(false);
 
   const predictUrl =
     `/api/predict?homeId=${home.id}&awayId=${away.id}` +
@@ -206,12 +189,6 @@ export default function PredictorPanel() {
     revalidateOnFocus: false,
     dedupingInterval: 900_000,
   });
-
-  const { data: bt, isLoading: btLoading } = useSWR<BacktestResponse>(
-    showBacktest ? "/api/backtest" : null,
-    fetcher,
-    { revalidateOnFocus: false, dedupingInterval: 600_000 }
-  );
 
   const homeColor = teamColor(home);
   const awayColor = teamColor(away);
@@ -371,72 +348,7 @@ export default function PredictorPanel() {
           <SnapshotCard label="Home State" team={home} snapshot={pred?.home} />
         </div>
 
-        <div className="rounded-lg border border-court-border bg-court-card p-5">
-          <div className="mb-4 flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <TestTube2 className="h-5 w-5 text-court-accent" />
-              <h3 className="text-base font-black text-white">Backtest Audit</h3>
-            </div>
-            <button
-              onClick={() => setShowBacktest((value) => !value)}
-              className="rounded-md border border-court-border px-3 py-2 text-xs font-semibold text-court-muted transition-colors hover:border-court-accent hover:text-white"
-            >
-              {showBacktest ? "Hide" : "Run audit"}
-            </button>
-          </div>
-
-          {!showBacktest && (
-            <div className="text-sm text-court-muted">
-              Replays completed current-season games in order and predicts each game before its result is applied.
-              The audit uses the current-season-only scope.
-            </div>
-          )}
-
-          {showBacktest && btLoading && <div className="py-8 text-center text-sm text-court-muted">Replaying season...</div>}
-          {showBacktest && bt?.error && <div className="text-sm text-court-muted">{bt.error}</div>}
-
-          {showBacktest && bt && !bt.error && (
-            <div className="space-y-4">
-              <div className="grid gap-3 md:grid-cols-4">
-                <MetricCard label="Accuracy" value={`${(bt.accuracy * 100).toFixed(1)}%`} detail={`${bt.correct}/${bt.total}`} />
-                <MetricCard label="Brier" value={bt.brierScore.toFixed(3)} detail="Lower is better" />
-                <MetricCard label="Log Loss" value={bt.logLoss.toFixed(3)} />
-                <MetricCard label="Home Baseline" value={`${(bt.homeBaselineAccuracy * 100).toFixed(1)}%`} />
-              </div>
-
-              <div className="grid gap-4 lg:grid-cols-2">
-                <div>
-                  <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-court-muted">Monthly Accuracy</div>
-                  <div className="space-y-2">
-                    {bt.byMonth.map((month) => (
-                      <div key={month.month} className="grid grid-cols-[4.5rem_1fr_4rem] items-center gap-2 text-xs">
-                        <span className="font-mono text-court-muted">{month.month}</span>
-                        <div className="h-2 overflow-hidden rounded-full bg-court-surface">
-                          <div className="h-full bg-court-accent" style={{ width: `${month.accuracy * 100}%` }} />
-                        </div>
-                        <span className="text-right font-mono text-white">{(month.accuracy * 100).toFixed(0)}%</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-court-muted">Recent Audited Games</div>
-                  <div className="space-y-1">
-                    {bt.sampleGames.slice(0, 8).map((game) => (
-                      <div key={game.gameId} className="grid grid-cols-[4.25rem_1fr_4rem_2rem] items-center gap-2 text-xs">
-                        <span className="font-mono text-court-muted">{game.date.slice(5)}</span>
-                        <span className="truncate text-white">{game.away} @ {game.home}</span>
-                        <span className="text-right font-mono text-court-muted">{(game.predHomeWin * 100).toFixed(0)}%</span>
-                        <span className={game.correct ? "text-court-live" : "text-court-red"}>{game.correct ? "Hit" : "Miss"}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+        <ModelHealthPanel />
       </div>
 
       <aside className="space-y-5">

@@ -144,7 +144,12 @@ async function fetchCurrentScheduleJson(): Promise<NbaScheduleResponse> {
     cache: "no-store",
   });
 
-  if (primary.ok) return primary.json();
+  if (primary.ok) {
+    const primaryJson = await primary.json();
+    if (primaryJson.leagueSchedule?.gameDates?.length) {
+      return primaryJson;
+    }
+  }
 
   const fallback = await fetch(NBA_CURRENT_SCHEDULE_FALLBACK_URL, {
     headers: NBA_CDN_HEADERS,

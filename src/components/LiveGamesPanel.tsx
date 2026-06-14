@@ -4,6 +4,7 @@ import useSWR from "swr";
 import type { ReactNode } from "react";
 import { Activity, CalendarX } from "lucide-react";
 import GameCard from "./GameCard";
+import PredictionBoard from "./PredictionBoard";
 import type { NBAScoreboard } from "@/lib/types";
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
@@ -68,24 +69,32 @@ export default function LiveGamesPanel() {
 
   if (games.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-lg border border-court-border bg-court-card py-16 text-center">
-        <CalendarX className="mb-3 h-9 w-9 text-court-muted" />
-        <div className="text-lg font-semibold text-white">No games today</div>
-        <div className="mt-1 text-sm text-court-muted">
-          {data?.gameDate
-            ? new Date(`${data.gameDate}T12:00:00`).toLocaleDateString("en-US", {
-                weekday: "long",
-                month: "long",
-                day: "numeric",
-              })
-            : "Check the season games tab for the full schedule."}
+      <div className="space-y-5">
+        <div className="relative overflow-hidden rounded-lg border border-court-border bg-court-card py-9 text-center">
+          <div className="scoreboard-empty-lines absolute inset-0 opacity-60" />
+          <div className="relative">
+            <CalendarX className="mx-auto mb-3 h-9 w-9 text-court-muted" />
+            <div className="text-lg font-black text-white">No games today</div>
+            <div className="mt-1 text-sm text-court-muted">
+              {data?.gameDate
+                ? new Date(`${data.gameDate}T12:00:00`).toLocaleDateString("en-US", {
+                    weekday: "long",
+                    month: "long",
+                    day: "numeric",
+                  })
+                : "The live scoreboard is quiet."}
+            </div>
+          </div>
         </div>
+        <PredictionBoard limit={3} />
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
+      <PredictionBoard limit={6} />
+
       {liveGames.length > 0 && (
         <Section title="Live Now" count={liveGames.length} tone="live">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">

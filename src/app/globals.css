@@ -12,9 +12,36 @@
 
 body {
   background:
+    linear-gradient(90deg, rgba(45, 212, 191, 0.035), transparent 34%, rgba(245, 184, 75, 0.028) 72%, transparent),
     linear-gradient(180deg, #12130f 0%, #10100f 42%, #0d0e0d 100%);
   color: #f7f7f2;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.dashboard-pulse::before,
+.scoreboard-empty-lines::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 0, transparent calc(50% - 1px), rgba(245, 184, 75, 0.16) 50%, transparent calc(50% + 1px)),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.045) 0 1px, transparent 1px 5.5rem),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 4.5rem);
+}
+
+.dashboard-pulse::after,
+.scoreboard-empty-lines::after {
+  content: "";
+  position: absolute;
+  right: -5rem;
+  top: 50%;
+  height: 18rem;
+  width: 18rem;
+  transform: translateY(-50%);
+  border: 1px solid rgba(245, 184, 75, 0.22);
+  border-radius: 999px;
+  pointer-events: none;
 }
 
 /* Custom scrollbar */

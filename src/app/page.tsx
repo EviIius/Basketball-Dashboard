@@ -1,232 +1,268 @@
 "use client";
 
-import { useState } from "react";
-import type { ComponentType } from "react";
-import dynamic from "next/dynamic";
-import {
-  Activity,
-  BarChart3,
-  Brackets,
-  CalendarDays,
-  PanelLeftClose,
-  PanelLeftOpen,
-  Radio,
-  Search,
-  Sparkles,
-} from "lucide-react";
-import DashboardPulse from "@/components/DashboardPulse";
-import OverviewBriefing from "@/components/OverviewBriefing";
+import Link from "next/link";
+import useSWR from "swr";
+import { Activity, ArrowRight, BadgeCheck, Layers3, Radio, Trophy, Zap } from "lucide-react";
 
-type View = "overview" | "forecast" | "lab" | "league" | "schedule" | "research" | "postseason";
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
-const LiveGamesPanel = dynamic(() => import("@/components/LiveGamesPanel"), { ssr: false });
-const PredictorPanel = dynamic(() => import("@/components/PredictorPanel"), { ssr: false });
-const SeasonGamesPanel = dynamic(() => import("@/components/SeasonGamesPanel"), { ssr: false });
-const StandingsPanel = dynamic(() => import("@/components/StandingsPanel"), { ssr: false });
-const LeadersPanel = dynamic(() => import("@/components/LeadersPanel"), { ssr: false });
-const HistoricalStatsPanel = dynamic(() => import("@/components/HistoricalStatsPanel"), { ssr: false });
-const PlayerSearchPanel = dynamic(() => import("@/components/PlayerSearchPanel"), { ssr: false });
-const PlayoffBracket = dynamic(() => import("@/components/PlayoffBracket"), { ssr: false });
-
-const VIEWS = [
-  { id: "overview", label: "Overview", meta: "Decision center", icon: Activity },
-  { id: "forecast", label: "Games & Picks", meta: "Live and scheduled win calls", icon: Radio },
-  { id: "lab", label: "Matchup Lab", meta: "Any-team simulator", icon: Sparkles },
-  { id: "league", label: "League Tables", meta: "Standings and leaders", icon: BarChart3 },
-  { id: "schedule", label: "Schedule", meta: "Full season feed", icon: CalendarDays },
-  { id: "research", label: "Research", meta: "Players and team archive", icon: Search },
-  { id: "postseason", label: "Bracket", meta: "Postseason picture", icon: Brackets },
-] satisfies { id: View; label: string; meta: string; icon: ComponentType<{ className?: string }> }[];
-
-function ViewButton({
-  view,
-  active,
-  onClick,
-  compact,
-  collapsed,
-}: {
-  view: (typeof VIEWS)[number];
-  active: boolean;
-  onClick: () => void;
-  compact?: boolean;
-  collapsed?: boolean;
-}) {
-  const Icon = view.icon;
-  return (
-    <button
-      type="button"
-      data-view={view.id}
-      aria-pressed={active}
-      aria-label={view.label}
-      title={collapsed ? view.label : undefined}
-      onClick={onClick}
-      className={`flex items-center gap-3 rounded-lg border px-3 py-2 text-left transition-colors ${
-        active
-          ? "border-court-accent bg-court-accent/10 text-white"
-          : "border-transparent text-court-muted hover:border-court-border hover:bg-court-card hover:text-white"
-      } ${compact ? "shrink-0 text-sm" : "w-full"} ${collapsed ? "justify-center px-2" : ""}`}
-    >
-      <Icon className={`h-4 w-4 shrink-0 ${active ? "text-court-accent" : ""}`} />
-      {!collapsed && (
-        <span className="min-w-0">
-          <span className="block truncate text-sm font-black">{view.label}</span>
-          {!compact && <span className="mt-0.5 block truncate text-[11px] text-court-muted">{view.meta}</span>}
-        </span>
-      )}
-    </button>
-  );
+interface NBAGame {
+  gameStatus: number;
+  homeTeam: { teamTricode: string; score: number };
+  awayTeam: { teamTricode: string; score: number };
 }
 
-function SectionHeader({ activeView }: { activeView: View }) {
-  const view = VIEWS.find((item) => item.id === activeView) ?? VIEWS[0];
+interface WCTeam {
+  tla: string;
+  crest: string;
+}
+
+interface WCMatch {
+  id: number;
+  status: "live" | "upcoming" | "finished" | "other";
+  minute: number | null;
+  group: string | null;
+  homeTeam: WCTeam;
+  awayTeam: WCTeam;
+  homeScore: number | null;
+  awayScore: number | null;
+}
+
+function wcLiveLabel(match: WCMatch) {
+  return match.minute ? `LIVE ${match.minute}'` : "LIVE";
+}
+
+function Stat({ label, value, detail }: { label: string; value: string | number; detail: string }) {
   return (
-    <div className="flex flex-wrap items-end justify-between gap-3 border-b border-court-border pb-4">
-      <div>
-        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-court-muted">{view.meta}</div>
-        <h2 className="mt-1 text-2xl font-black tracking-tight text-white">{view.label}</h2>
-      </div>
-      <div className="flex items-center gap-2 text-xs text-court-muted">
-        <span className="h-2 w-2 rounded-full bg-court-live" />
-        NBA data
-      </div>
+    <div className="rounded-md border border-white/10 bg-black/20 p-3">
+      <div className="text-[10px] font-semibold uppercase tracking-widest text-court-muted">{label}</div>
+      <div className="mt-1 text-2xl font-black text-white">{value}</div>
+      <div className="text-[10px] text-court-muted">{detail}</div>
     </div>
   );
 }
 
-function OverviewPanel({ onNavigate }: { onNavigate: (view: View) => void }) {
-  return (
-    <div className="space-y-5">
-      <DashboardPulse />
-      <OverviewBriefing onNavigate={onNavigate} />
-    </div>
-  );
-}
+function BasketballCard() {
+  const { data } = useSWR<{ games: NBAGame[] }>("/api/live-games", fetcher, {
+    refreshInterval: 30_000,
+  });
 
-function LeaguePanel() {
-  return (
-    <div className="space-y-5">
-      <StandingsPanel />
-      <LeadersPanel />
-    </div>
-  );
-}
-
-function ResearchPanel() {
-  return (
-    <div className="space-y-5">
-      <PlayerSearchPanel />
-      <HistoricalStatsPanel />
-    </div>
-  );
-}
-
-function ActivePanel({ activeView, onNavigate }: { activeView: View; onNavigate: (view: View) => void }) {
-  if (activeView === "overview") return <OverviewPanel onNavigate={onNavigate} />;
-  if (activeView === "forecast") return <LiveGamesPanel />;
-  if (activeView === "lab") return <PredictorPanel />;
-  if (activeView === "league") return <LeaguePanel />;
-  if (activeView === "schedule") return <SeasonGamesPanel />;
-  if (activeView === "research") return <ResearchPanel />;
-  return <PlayoffBracket />;
-}
-
-export default function Home() {
-  const [activeView, setActiveView] = useState<View>("overview");
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const games = data?.games ?? [];
+  const liveGames = games.filter((game) => game.gameStatus === 2);
+  const featured = liveGames[0] ?? games[0];
 
   return (
-    <div className="min-h-screen bg-court-bg text-white">
-      <div className="mx-auto flex max-w-[1600px] gap-0 px-4 lg:gap-5 lg:px-6">
-        <aside
-          className={`sticky top-0 hidden h-screen shrink-0 flex-col border-r border-court-border py-5 pr-5 transition-[width] duration-200 lg:flex ${
-            sidebarCollapsed ? "w-20" : "w-72"
-          }`}
-        >
-          <div className={`flex items-center ${sidebarCollapsed ? "justify-center" : "gap-3"}`}>
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-court-border bg-court-card">
-              <Activity className="h-5 w-5 text-court-accent" />
-            </div>
-            {!sidebarCollapsed && (
-            <div className="min-w-0">
-              <h1 className="truncate text-lg font-black tracking-tight text-white">Basketball Decision Desk</h1>
-              <div className="text-xs text-court-muted">Predictions first, data behind them</div>
-            </div>
-            )}
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setSidebarCollapsed((value) => !value)}
-            className={`mt-4 flex items-center gap-2 rounded-lg border border-court-border bg-court-card px-3 py-2 text-xs font-bold text-court-muted transition-colors hover:border-court-accent hover:text-white ${
-              sidebarCollapsed ? "justify-center" : ""
-            }`}
-            aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-            title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-          >
-            {sidebarCollapsed ? <PanelLeftOpen className="h-4 w-4" /> : <PanelLeftClose className="h-4 w-4" />}
-            {!sidebarCollapsed && "Collapse"}
-          </button>
-
-          <nav className="mt-6 space-y-1">
-            {VIEWS.map((view) => (
-              <ViewButton
-                key={view.id}
-                view={view}
-                active={activeView === view.id}
-                onClick={() => setActiveView(view.id)}
-                collapsed={sidebarCollapsed}
-              />
-            ))}
-          </nav>
-
-          <div className={`mt-auto rounded-lg border border-court-border bg-court-card p-3 text-xs ${sidebarCollapsed ? "space-y-3" : "space-y-2"}`}>
-            <div className="flex justify-between gap-3">
-              {!sidebarCollapsed && <span className="text-court-muted">Model</span>}
-              <span className="font-semibold text-court-accent">Rolling v3</span>
-            </div>
-            <div className="flex justify-between gap-3">
-              {!sidebarCollapsed && <span className="text-court-muted">Feed</span>}
-              <span className="font-semibold text-white">{sidebarCollapsed ? "NBA" : "NBA official"}</span>
-            </div>
-            <div className="flex justify-between gap-3">
-              {!sidebarCollapsed && <span className="text-court-muted">Focus</span>}
-              <span className="font-semibold text-court-amber">{sidebarCollapsed ? "Wins" : "Win calls"}</span>
-            </div>
-          </div>
-        </aside>
-
-        <div className="min-w-0 flex-1">
-          <header className="sticky top-0 z-50 -mx-4 border-b border-court-border bg-court-bg/95 px-4 py-4 backdrop-blur lg:hidden">
+    <Link href="/basketball" className="group block view-enter">
+      <div data-sport="basketball" className="sport-card overflow-hidden rounded-lg transition-transform duration-300 hover:-translate-y-1">
+        <div className="relative h-1 w-full bg-gradient-to-r from-court-accent via-court-accent/50 to-transparent" />
+        <div className="relative p-6">
+          <div className="mb-6 flex items-start justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-court-border bg-court-card">
-                <Activity className="h-5 w-5 text-court-accent" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-court-accent/25 bg-court-accent/10">
+                <Activity className="h-6 w-6 text-court-accent" />
               </div>
-              <div className="min-w-0">
-                <h1 className="truncate text-lg font-black tracking-tight text-white">Basketball Decision Desk</h1>
-                <div className="text-xs text-court-muted">Predictions first</div>
+              <div>
+                <div className="mb-1 flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-court-accent">
+                  <Zap className="h-3 w-3" />
+                  Prediction OS
+                </div>
+                <h2 className="text-xl font-black tracking-tight text-white">NBA Basketball</h2>
+                <p className="mt-0.5 text-xs text-court-muted">Predictions, scores, standings</p>
               </div>
             </div>
-            <nav className="mt-4 overflow-x-auto">
-              <div className="flex min-w-max gap-1">
-                {VIEWS.map((view) => (
-                  <ViewButton
-                    key={view.id}
-                    view={view}
-                    active={activeView === view.id}
-                    onClick={() => setActiveView(view.id)}
-                    compact
-                  />
-                ))}
-              </div>
-            </nav>
-          </header>
+            <span className="rounded-full border border-court-accent/30 bg-court-accent/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-court-accent">
+              Rolling v3
+            </span>
+          </div>
 
-          <main className="space-y-5 py-5">
-            <SectionHeader activeView={activeView} />
-            <ActivePanel activeView={activeView} onNavigate={setActiveView} />
-          </main>
+          <div className="mb-5 grid grid-cols-3 gap-3">
+            <Stat label="Live" value={liveGames.length || "--"} detail="games now" />
+            <Stat label="Today" value={games.length || "--"} detail="total games" />
+            <Stat label="Views" value={7} detail="desk tabs" />
+          </div>
+
+          {featured && (
+            <div className="score-lane mb-5 rounded-lg border border-white/10 px-4 py-3">
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-center">
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-court-muted">{featured.homeTeam.teamTricode}</div>
+                  {featured.gameStatus !== 1 && <div className="text-2xl font-black tabular-nums text-white">{featured.homeTeam.score}</div>}
+                </div>
+                <div className="px-4 text-xs font-semibold text-court-muted">
+                  {featured.gameStatus === 2 ? <span className="text-court-live">LIVE</span> : featured.gameStatus === 3 ? "Final" : "vs"}
+                </div>
+                <div className="text-center">
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-court-muted">{featured.awayTeam.teamTricode}</div>
+                  {featured.gameStatus !== 1 && <div className="text-2xl font-black tabular-nums text-white">{featured.awayTeam.score}</div>}
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="mb-5 flex flex-wrap gap-1.5">
+            {["Overview", "Games & Picks", "Matchup Lab", "League Tables", "Schedule", "Bracket"].map((item) => (
+              <span key={item} className="rounded-full border border-white/10 bg-white/[0.025] px-2.5 py-1 text-[10px] font-semibold text-court-muted">
+                {item}
+              </span>
+            ))}
+          </div>
+
+          <div className="flex items-center justify-between rounded-lg border border-court-accent/20 bg-court-accent/5 px-4 py-3 transition-colors group-hover:border-court-accent/50 group-hover:bg-court-accent/10">
+            <span className="text-sm font-bold text-white">Open Basketball Desk</span>
+            <ArrowRight className="h-4 w-4 text-court-accent transition-transform group-hover:translate-x-1" />
+          </div>
         </div>
       </div>
+    </Link>
+  );
+}
+
+function WorldCupCard() {
+  const { data } = useSWR<{ live: WCMatch[]; today: WCMatch[]; recent: WCMatch[]; upcoming: WCMatch[] }>(
+    "/api/wc/matches",
+    fetcher,
+    { refreshInterval: 60_000 },
+  );
+
+  const liveCount = data?.live?.length ?? 0;
+  const todayCount = (data?.today?.length ?? 0) + liveCount;
+  const featured = data?.live?.[0] ?? data?.today?.[0] ?? data?.upcoming?.[0] ?? data?.recent?.[0];
+
+  return (
+    <Link href="/world-cup" className="group block view-enter">
+      <div data-sport="worldcup" className="sport-card overflow-hidden rounded-lg transition-transform duration-300 hover:-translate-y-1">
+        <div className="relative h-1 w-full bg-gradient-to-r from-court-worldcup via-court-worldcup/50 to-transparent" />
+        <div className="relative p-6">
+          <div className="mb-6 flex items-start justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-court-worldcup/25 bg-court-worldcup/10">
+                <Trophy className="h-6 w-6 text-court-worldcup" />
+              </div>
+              <div>
+                <div className="mb-1 flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-court-worldcup">
+                  <Trophy className="h-3 w-3" />
+                  Tournament OS
+                </div>
+                <h2 className="text-xl font-black tracking-tight text-white">2026 World Cup</h2>
+                <p className="mt-0.5 text-xs text-court-muted">USA, Canada, Mexico</p>
+              </div>
+            </div>
+            <span className="rounded-full border border-court-worldcup/30 bg-court-worldcup/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-court-worldcup">
+              Group Stage
+            </span>
+          </div>
+
+          <div className="mb-5 grid grid-cols-3 gap-3">
+            <Stat label="Live" value={liveCount || "--"} detail="matches now" />
+            <Stat label="Today" value={todayCount || "--"} detail="matches" />
+            <Stat label="Teams" value={48} detail="12 groups" />
+          </div>
+
+          {featured && (
+            <div className="score-lane mb-5 rounded-lg border border-white/10 px-4 py-3">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex min-w-0 items-center gap-2">
+                  <img src={featured.homeTeam.crest} alt={featured.homeTeam.tla} className="h-6 w-6 object-contain" />
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-court-muted">{featured.homeTeam.tla}</span>
+                  {featured.status !== "upcoming" && <span className="text-2xl font-black tabular-nums text-white">{featured.homeScore ?? 0}</span>}
+                </div>
+                <div className="px-3 text-xs font-semibold text-court-muted">
+                  {featured.status === "live" ? <span className="text-court-live">{wcLiveLabel(featured)}</span> : featured.status === "finished" ? "FT" : "vs"}
+                </div>
+                <div className="flex min-w-0 items-center gap-2">
+                  {featured.status !== "upcoming" && <span className="text-2xl font-black tabular-nums text-white">{featured.awayScore ?? 0}</span>}
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-court-muted">{featured.awayTeam.tla}</span>
+                  <img src={featured.awayTeam.crest} alt={featured.awayTeam.tla} className="h-6 w-6 object-contain" />
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="mb-5 flex flex-wrap gap-1.5">
+            {["Overview", "Matches", "Groups", "Top Scorers"].map((item) => (
+              <span key={item} className="rounded-full border border-white/10 bg-white/[0.025] px-2.5 py-1 text-[10px] font-semibold text-court-muted">
+                {item}
+              </span>
+            ))}
+          </div>
+
+          <div className="flex items-center justify-between rounded-lg border border-court-worldcup/20 bg-court-worldcup/5 px-4 py-3 transition-colors group-hover:border-court-worldcup/40 group-hover:bg-court-worldcup/10">
+            <span className="text-sm font-bold text-white">Open World Cup Desk</span>
+            <ArrowRight className="h-4 w-4 text-court-worldcup transition-transform group-hover:translate-x-1" />
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+export default function LandingPage() {
+  return (
+    <div className="landing-canvas min-h-screen text-white">
+      <header className="border-b border-white/10 bg-court-bg/55 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-[1500px] items-center justify-between px-4 py-4 lg:px-6">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-court-accent/25 bg-court-accent/10">
+              <Radio className="h-5 w-5 text-court-accent" />
+            </div>
+            <div>
+              <h1 className="text-lg font-black tracking-tight text-white">SportsDash</h1>
+              <p className="text-xs text-court-muted">Multi-sport command center</p>
+            </div>
+          </div>
+          <div className="hidden items-center gap-2 rounded-full border border-court-live/20 bg-court-live/10 px-3 py-1.5 text-xs font-bold text-court-live sm:flex">
+            <span className="live-dot h-1.5 w-1.5" />
+            Live data connected
+          </div>
+        </div>
+      </header>
+
+      <main className="mx-auto max-w-[1500px] px-4 py-8 lg:px-6 lg:py-10">
+        <div className="mb-7 grid gap-5 lg:grid-cols-[minmax(0,1fr)_24rem] lg:items-end">
+          <div>
+            <p className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.035] px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-court-muted">
+              <Layers3 className="h-3.5 w-3.5 text-court-accent" />
+              Your dashboards
+            </p>
+            <h2 className="mt-4 max-w-3xl text-4xl font-black tracking-tight text-white sm:text-5xl">
+              Live sports intelligence, one consistent workspace.
+            </h2>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-court-muted">
+              Match centers, predictions, standings, scorers, and brackets now share one visual system built for scanning first and drilling in second.
+            </p>
+          </div>
+          <div className="surface-card-quiet rounded-lg p-4">
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <div className="text-xs font-black uppercase tracking-[0.16em] text-court-muted">Signal stack</div>
+              <BadgeCheck className="h-4 w-4 text-court-live" />
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              <Stat label="Sports" value={2} detail="active desks" />
+              <Stat label="Feeds" value={3} detail="API surfaces" />
+              <Stat label="Mode" value="Live" detail="auto refresh" />
+            </div>
+          </div>
+        </div>
+
+        <div className="ticker-track mb-6 overflow-hidden rounded-lg border border-white/10 px-4 py-3">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-court-muted">
+            <span className="inline-flex items-center gap-2 text-white">
+              <span className="live-dot h-1.5 w-1.5" />
+              Live board
+            </span>
+            <span>NBA predictions refresh every 5 minutes</span>
+            <span className="hidden text-white/20 sm:inline">/</span>
+            <span>World Cup matches refresh every minute</span>
+            <span className="hidden text-white/20 sm:inline">/</span>
+            <span>Shared navigation and stats language across sports</span>
+          </div>
+        </div>
+
+        <div className="stagger-in grid grid-cols-1 gap-6 lg:max-w-6xl lg:grid-cols-2">
+          <BasketballCard />
+          <WorldCupCard />
+        </div>
+      </main>
     </div>
   );
 }

@@ -78,7 +78,7 @@ export default function LeadersPanel() {
         {isLoading && (
           <div className="space-y-2 p-6">
             {Array.from({ length: 10 }).map((_, index) => (
-              <div key={index} className="h-8 animate-pulse rounded-md bg-court-border/40" />
+              <div key={index} className="loading-shimmer h-8 rounded-md bg-court-border/40" />
             ))}
           </div>
         )}

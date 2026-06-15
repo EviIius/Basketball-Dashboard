@@ -168,7 +168,7 @@ export default function DashboardPulse() {
       : "Waiting for forecast";
 
   return (
-    <section className="dashboard-pulse relative overflow-hidden rounded-lg border border-court-border bg-court-surface">
+    <section className="dashboard-pulse spotlight-surface relative overflow-hidden rounded-lg">
       <div className="relative grid gap-4 p-4 md:grid-cols-[minmax(0,1fr)_14rem] md:items-end lg:p-5">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-3">
@@ -193,7 +193,7 @@ export default function DashboardPulse() {
           </p>
         </div>
 
-        <div className="rounded-lg border border-court-border bg-court-card/80 p-3">
+        <div className="score-lane rounded-lg border border-white/10 p-3">
           <div className="text-[10px] font-bold uppercase tracking-wider text-court-muted">Favorite</div>
           <div className="mt-1 flex items-baseline justify-between gap-3">
             <span className="text-2xl font-black text-white">{favorite}</span>
@@ -255,7 +255,7 @@ export default function DashboardPulse() {
         {validation?.checks && (
           <div className="mt-3 hidden flex-wrap gap-2 sm:flex">
             {validation.checks.map((check) => (
-              <span key={check.id} className="inline-flex items-center gap-2 rounded-md border border-court-border bg-court-card/70 px-2 py-1">
+              <span key={check.id} className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-black/20 px-2 py-1">
                 <span className={`h-1.5 w-1.5 rounded-full ${statusDot(check.status)}`} />
                 <span className="font-semibold text-white">{check.label}</span>
                 <span>{check.value}</span>

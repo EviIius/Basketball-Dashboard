@@ -13,7 +13,7 @@ function GameGridSkeleton() {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
       {Array.from({ length: 6 }).map((_, index) => (
-        <div key={index} className="h-64 animate-pulse rounded-lg border border-court-border bg-court-card" />
+        <div key={index} className="surface-card-quiet loading-shimmer h-64 rounded-lg" />
       ))}
     </div>
   );
@@ -33,7 +33,7 @@ function Section({
   return (
     <section>
       <div className="mb-3 flex items-center gap-2">
-        {tone === "live" && <span className="h-2 w-2 rounded-full bg-court-live" />}
+        {tone === "live" && <span className="live-dot h-2 w-2" />}
         <h3 className={`text-sm font-black uppercase tracking-wider ${tone === "live" ? "text-court-live" : "text-court-muted"}`}>
           {title}
         </h3>
@@ -54,7 +54,7 @@ export default function LiveGamesPanel() {
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-lg border border-court-border bg-court-card py-16 text-center">
+      <div className="surface-card-quiet flex flex-col items-center justify-center rounded-lg py-16 text-center">
         <Activity className="mb-3 h-8 w-8 text-court-muted" />
         <div className="font-semibold text-white">Could not load live games</div>
         <div className="mt-1 text-sm text-court-muted">The NBA live feed did not respond.</div>
@@ -70,7 +70,7 @@ export default function LiveGamesPanel() {
   if (games.length === 0) {
     return (
       <div className="space-y-5">
-        <div className="relative overflow-hidden rounded-lg border border-court-border bg-court-card py-9 text-center">
+        <div className="spotlight-surface relative overflow-hidden rounded-lg py-9 text-center">
           <div className="scoreboard-empty-lines absolute inset-0 opacity-60" />
           <div className="relative">
             <CalendarX className="mx-auto mb-3 h-9 w-9 text-court-muted" />

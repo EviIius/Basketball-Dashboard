@@ -77,9 +77,9 @@ export default function PredictionWidget({
       <div className="mt-3 border-t border-court-border pt-3">
         <div className="mb-2 flex items-center justify-between">
           <span className="text-[10px] font-semibold uppercase tracking-wider text-court-muted">Prediction</span>
-          <span className="text-[10px] text-court-muted">Loading</span>
+          <span className="loading-dots text-[10px] text-court-muted">Loading</span>
         </div>
-        <div className="h-2 animate-pulse rounded-full bg-court-border" />
+        <div className="loading-shimmer h-2 rounded-full bg-court-border/40" />
       </div>
     );
   }

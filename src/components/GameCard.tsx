@@ -108,9 +108,9 @@ export default function GameCard({ game }: { game: NBAGame }) {
 
   return (
     <div
-      className={`rounded-lg border bg-court-card transition-colors ${
-        expandable ? "border-court-border hover:border-court-accent/60" : "border-court-border"
-      } ${expanded ? "border-court-accent/70" : ""}`}
+      className={`surface-card-quiet overflow-hidden rounded-lg transition-all duration-200 ${
+        expandable ? "hover:-translate-y-0.5 hover:border-court-accent/60" : ""
+      } ${isLive ? "border-court-live/35 bg-court-live/5" : ""} ${expanded ? "border-court-accent/70" : ""}`}
     >
       <div
         className={expandable ? "cursor-pointer p-4" : "p-4"}
@@ -121,7 +121,7 @@ export default function GameCard({ game }: { game: NBAGame }) {
           <div className="flex min-w-0 items-center gap-2">
             {isLive && (
               <span className="flex shrink-0 items-center gap-1">
-                <span className="h-2 w-2 rounded-full bg-court-live" />
+                <span className="live-dot h-2 w-2" />
                 <span className="text-xs font-bold text-court-live">LIVE</span>
               </span>
             )}
@@ -156,7 +156,7 @@ export default function GameCard({ game }: { game: NBAGame }) {
             inBonus={game.awayTeam.inBonus}
             timeoutsRemaining={game.awayTeam.timeoutsRemaining}
           />
-          <div className="h-px bg-court-border" />
+          <div className="h-px bg-white/10" />
           <TeamBlock
             city={game.homeTeam.teamCity}
             name={game.homeTeam.teamName}
@@ -173,7 +173,7 @@ export default function GameCard({ game }: { game: NBAGame }) {
         </div>
 
         {game.gameStatus !== 1 && game.homeTeam.periods?.length > 0 && (
-          <div className="mt-3 border-t border-court-border pt-3">
+          <div className="mt-3 border-t border-white/10 pt-3">
             <div className="flex gap-1 font-mono text-xs">
               <div className="w-8 shrink-0 text-court-muted" />
               {game.homeTeam.periods.map((period) => (
@@ -198,7 +198,7 @@ export default function GameCard({ game }: { game: NBAGame }) {
         )}
 
         {game.gameStatus !== 1 && game.gameLeaders?.homeLeaders?.name && !expanded && (
-          <div className="mt-3 grid grid-cols-2 gap-3 border-t border-court-border pt-3">
+          <div className="mt-3 grid grid-cols-2 gap-3 border-t border-white/10 pt-3">
             {[
               { side: "away", leader: game.gameLeaders.awayLeaders, tricode: game.awayTeam.teamTricode },
               { side: "home", leader: game.gameLeaders.homeLeaders, tricode: game.homeTeam.teamTricode },
@@ -227,7 +227,7 @@ export default function GameCard({ game }: { game: NBAGame }) {
         />
 
         {expandable && (
-          <div className="mt-3 flex items-center justify-center gap-1 border-t border-court-border pt-3 text-[11px] text-court-muted transition-colors hover:text-court-accent">
+          <div className="mt-3 flex items-center justify-center gap-1 border-t border-white/10 pt-3 text-[11px] text-court-muted transition-colors hover:text-court-accent">
             <span>{expanded ? "Hide box score" : "Box score"}</span>
             {expanded ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
           </div>
@@ -235,7 +235,7 @@ export default function GameCard({ game }: { game: NBAGame }) {
       </div>
 
       {expanded && expandable && (
-        <div className="rounded-b-lg border-t border-court-border bg-court-surface/45">
+        <div className="rounded-b-lg border-t border-white/10 bg-black/20">
           <BoxScorePanel gameId={game.gameId} liveRefresh={isLive} />
         </div>
       )}

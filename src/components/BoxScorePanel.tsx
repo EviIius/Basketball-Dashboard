@@ -95,7 +95,7 @@ function PlayerTable({ team }: { team: BoxTeam }) {
                       <span className="ml-1 text-court-muted text-[10px]">*</span>
                     )}
                     {onCourt && (
-                      <span className="ml-1 inline-block w-1.5 h-1.5 rounded-full bg-court-live animate-pulse" title="On court" />
+                      <span className="live-dot ml-1 inline-block h-1.5 w-1.5" title="On court" />
                     )}
                   </td>
                   {dnp ? (
@@ -256,12 +256,12 @@ export default function BoxScorePanel({
     return (
       <div className="p-4">
         <div className="flex gap-2 mb-3">
-          <div className="h-7 w-20 bg-court-border rounded animate-pulse" />
-          <div className="h-7 w-20 bg-court-border rounded animate-pulse" />
+          <div className="loading-shimmer h-7 w-20 rounded bg-court-border/40" />
+          <div className="loading-shimmer h-7 w-20 rounded bg-court-border/40" />
         </div>
         <div className="space-y-2">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="h-6 bg-court-border/50 rounded animate-pulse" />
+            <div key={i} className="loading-shimmer h-6 rounded bg-court-border/40" />
           ))}
         </div>
       </div>
@@ -305,8 +305,8 @@ export default function BoxScorePanel({
       {/* Arena info */}
       {data.arena?.arenaName && (
         <div className="mt-4 pt-3 border-t border-court-border text-court-muted text-[11px] flex flex-wrap gap-x-4 gap-y-1">
-          <span>📍 {data.arena.arenaName}, {data.arena.arenaCity}</span>
-          {data.attendance > 0 && <span>👥 {data.attendance.toLocaleString()}</span>}
+          <span>Venue: {data.arena.arenaName}, {data.arena.arenaCity}</span>
+          {data.attendance > 0 && <span>Attendance: {data.attendance.toLocaleString()}</span>}
           {data.sellout === "1" && <span className="text-court-accent">Sellout</span>}
         </div>
       )}

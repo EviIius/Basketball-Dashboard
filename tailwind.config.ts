@@ -16,6 +16,8 @@ const config: Config = {
           red: "#ef5b5b",
           live: "#22c55e",
           muted: "#9a9f92",
+          worldcup: "#f97316",
+          "worldcup-dim": "#ea580c",
         },
       },
       borderRadius: {

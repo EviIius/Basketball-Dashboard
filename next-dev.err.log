@@ -1,2 +1,455 @@
  ⚠ Cross origin request detected from 127.0.0.1 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
 Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app-paths-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\server\\app-paths-manifest.json',
+  page: '/api/wc/matches'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json',
+  page: '/world-cup'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+ ⨯ Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\webpack-runtime.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\pages\_document.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\require.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\load-components.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\utils.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\options.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\index.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\next.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\wc\matches\route.js:1:8927)
+    at Object.<anonymous> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\wc\matches\route.js:1:8975) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/wc/matches'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app-paths-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\server\\app-paths-manifest.json',
+  page: '/api/wc/matches'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\webpack-runtime.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\pages\_document.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\require.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\load-components.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\utils.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\options.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\index.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\next.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\wc\matches\route.js:1:8927)
+    at Object.<anonymous> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\wc\matches\route.js:1:8975) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/wc/matches'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json',
+  page: '/world-cup'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+ ⨯ Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\webpack-runtime.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\pages\_document.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\require.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\load-components.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\utils.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\options.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\index.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\next.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\live-games\route.js:1:7468)
+    at Object.<anonymous> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\live-games\route.js:1:7516) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/live-games'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\webpack-runtime.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\pages\_document.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\require.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\load-components.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\utils.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\options.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\index.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\next.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\live-games\route.js:1:7468)
+    at Object.<anonymous> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\live-games\route.js:1:7516) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/live-games'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json',
+  page: '/world-cup'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json',
+  page: '/world-cup'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json',
+  page: '/world-cup'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json',
+  page: '/world-cup'
+}
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\cache\webpack\client-development-fallback\0.pack.gz_' -> 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\cache\webpack\client-development-fallback\0.pack.gz'
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+ ⨯ Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\webpack-runtime.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\pages\_document.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\require.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\load-components.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\utils.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\options.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\index.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\next.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\wc\matches\route.js:1:8927)
+    at Object.<anonymous> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\wc\matches\route.js:1:8975) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/wc/matches'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\webpack-runtime.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\pages\_document.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\require.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\load-components.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\utils.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\options.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\index.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\next.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\wc\matches\route.js:1:8927)
+    at Object.<anonymous> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\wc\matches\route.js:1:8975) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/wc/matches'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+ ⨯ Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\webpack-runtime.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\pages\_document.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\require.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\load-components.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\utils.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\options.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\index.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\next.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\live-games\route.js:1:7468)
+    at Object.<anonymous> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\live-games\route.js:1:7516) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/live-games'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\webpack-runtime.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\pages\_document.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\require.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\load-components.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\utils.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\options.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\index.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\next.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\live-games\route.js:1:7468)
+    at Object.<anonymous> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\live-games\route.js:1:7516) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/live-games'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+ ⨯ Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\webpack-runtime.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\pages\_document.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\require.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\load-components.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\utils.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\options.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\index.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\next.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\wc\matches\route.js:1:8927)
+    at Object.<anonymous> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\wc\matches\route.js:1:8975) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/wc/matches'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\webpack-runtime.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\pages\_document.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\require.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\load-components.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\utils.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\options.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\index.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\next.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\wc\matches\route.js:1:8927)
+    at Object.<anonymous> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\wc\matches\route.js:1:8975) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/wc/matches'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+ ⨯ Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\webpack-runtime.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\pages\_document.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\require.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\load-components.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\utils.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\options.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\index.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\next.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\live-games\route.js:1:7468)
+    at Object.<anonymous> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\live-games\route.js:1:7516) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/live-games'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\routes-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\rbrul\\Documents\\GitHub\\Basketball-Dashboard\\.next\\routes-manifest.json'
+}
+Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\webpack-runtime.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\pages\_document.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\require.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\load-components.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\utils.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\options.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\swc\index.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\config.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\next.js
+- C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\live-games\route.js:1:7468)
+    at Object.<anonymous> (C:\Users\rbrul\Documents\GitHub\Basketball-Dashboard\.next\server\app\api\live-games\route.js:1:7516) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/api/live-games'
+}

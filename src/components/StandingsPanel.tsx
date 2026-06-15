@@ -134,7 +134,7 @@ export default function StandingsPanel() {
     return (
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         {[0, 1].map((index) => (
-          <div key={index} className="h-[32rem] animate-pulse rounded-lg border border-court-border bg-court-card" />
+          <div key={index} className="surface-card-quiet loading-shimmer h-[32rem] rounded-lg" />
         ))}
       </div>
     );

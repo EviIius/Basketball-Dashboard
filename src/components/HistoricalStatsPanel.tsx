@@ -111,9 +111,9 @@ export default function HistoricalStatsPanel() {
         {isLoading && (
           <div className="flex h-80 items-center justify-center">
             <div className="w-full space-y-2">
-              <div className="mx-auto h-2 w-3/4 animate-pulse rounded bg-court-border" />
-              <div className="mx-auto h-40 animate-pulse rounded bg-court-border" />
-              <div className="mx-auto h-2 w-1/2 animate-pulse rounded bg-court-border" />
+              <div className="loading-shimmer mx-auto h-2 w-3/4 rounded bg-court-border/40" />
+              <div className="loading-shimmer mx-auto h-40 rounded bg-court-border/40" />
+              <div className="loading-shimmer mx-auto h-2 w-1/2 rounded bg-court-border/40" />
             </div>
           </div>
         )}

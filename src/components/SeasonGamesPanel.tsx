@@ -202,10 +202,10 @@ export default function SeasonGamesPanel() {
       <div className="space-y-4">
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {Array.from({ length: 4 }).map((_, index) => (
-            <div key={index} className="h-24 animate-pulse rounded-lg border border-court-border bg-court-card" />
+            <div key={index} className="surface-card-quiet loading-shimmer h-24 rounded-lg" />
           ))}
         </div>
-        <div className="h-96 animate-pulse rounded-lg border border-court-border bg-court-card" />
+        <div className="surface-card-quiet loading-shimmer h-96 rounded-lg" />
       </div>
     );
   }

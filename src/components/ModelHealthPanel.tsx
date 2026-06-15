@@ -49,7 +49,7 @@ export default function ModelHealthPanel({ compact = false }: { compact?: boolea
   });
 
   if (isLoading) {
-    return <div className="h-56 animate-pulse rounded-lg border border-court-border bg-court-card" />;
+    return <div className="surface-card-quiet loading-shimmer h-56 rounded-lg" />;
   }
 
   if (error || data?.error || !data) {

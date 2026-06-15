@@ -103,13 +103,13 @@ function BriefCard({
   onClick: () => void;
 }) {
   return (
-    <article className="rounded-lg border border-court-border bg-court-card p-4">
+    <article className="surface-card-quiet group rounded-lg p-4 transition-transform duration-200 hover:-translate-y-0.5">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.16em] text-court-muted">
           {icon}
           {eyebrow}
         </div>
-        <div className="rounded-md border border-court-border bg-court-surface px-2 py-1 font-mono text-sm font-black text-white">
+        <div className="rounded-md border border-white/10 bg-black/20 px-2 py-1 font-mono text-sm font-black text-white">
           {value}
         </div>
       </div>
@@ -118,7 +118,7 @@ function BriefCard({
       <button
         type="button"
         onClick={onClick}
-        className="mt-4 inline-flex items-center gap-2 rounded-md border border-court-border bg-court-surface px-3 py-2 text-xs font-bold text-white transition-colors hover:border-court-accent"
+        className="mt-4 inline-flex items-center gap-2 rounded-md border border-court-accent/25 bg-court-accent/5 px-3 py-2 text-xs font-bold text-white transition-colors hover:border-court-accent hover:bg-court-accent/10"
       >
         {action}
       </button>
@@ -183,7 +183,7 @@ export default function OverviewBriefing({ onNavigate }: { onNavigate: (view: De
         action="Schedule"
         onClick={() => onNavigate("schedule")}
       />
-      <div className="rounded-lg border border-court-border bg-court-card p-4 lg:col-span-3">
+      <div className="surface-card-quiet rounded-lg p-4 lg:col-span-3">
         <div className="flex flex-wrap items-center gap-3 text-sm text-court-muted">
           <span className="inline-flex items-center gap-2 font-semibold text-white">
             <CheckCircle2 className="h-4 w-4 text-court-live" />

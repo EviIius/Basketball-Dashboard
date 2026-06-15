@@ -165,13 +165,13 @@ export default function PlayoffBracket() {
     return (
       <div className="space-y-4">
         <BracketToolbar season={season} seasons={seasons} onSeasonChange={setSeason} />
-        <div className="h-28 animate-pulse rounded-lg border border-court-border bg-court-card" />
+        <div className="surface-card-quiet loading-shimmer h-28 rounded-lg" />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
           {Array.from({ length: 4 }).map((_, index) => (
             <div key={index} className="space-y-3">
-              <div className="h-4 w-3/4 animate-pulse rounded bg-court-border" />
+              <div className="loading-shimmer h-4 w-3/4 rounded bg-court-border/40" />
               {Array.from({ length: 2 }).map((_, row) => (
-                <div key={row} className="h-24 animate-pulse rounded-lg border border-court-border bg-court-card" />
+                <div key={row} className="surface-card-quiet loading-shimmer h-24 rounded-lg" />
               ))}
             </div>
           ))}
